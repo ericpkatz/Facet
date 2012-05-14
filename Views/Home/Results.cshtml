@@ -1,0 +1,17 @@
+﻿@model FacetSearch.Models.FacetSearchComposite<SearchProto.Models.Entities.Profile>
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Results"))
+{
+    @Html.ActionLink("Results", "Results", null, new { @class="postLink ajax"});
+    <ul>
+        @foreach (var result in Model.Results)
+        {
+            <li>
+                @result.Name
+            </li>
+        }
+    </ul>
+}

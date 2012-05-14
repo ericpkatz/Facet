@@ -1,0 +1,7 @@
+C:\Users\ekatz\Documents\dotnet\FacetSearch\bin\FacetSearch.dll
+C:\Users\ekatz\Documents\dotnet\FacetSearch\bin\FacetSearch.pdb
+C:\Users\ekatz\Documents\dotnet\FacetSearch\bin\EntityFramework.dll
+C:\Users\ekatz\Documents\dotnet\FacetSearch\bin\EntityFramework.xml
+C:\Users\ekatz\Documents\dotnet\FacetSearch\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\ekatz\Documents\dotnet\FacetSearch\obj\Debug\FacetSearch.dll
+C:\Users\ekatz\Documents\dotnet\FacetSearch\obj\Debug\FacetSearch.pdb

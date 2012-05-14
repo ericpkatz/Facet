@@ -1,0 +1,35 @@
+﻿@model FacetSearch.Models.Facet
+
+@{
+    Layout = null;
+}
+
+                <form action="" method="post" id="form-filter-@Model.Index">
+                @if (Model.IssueUpdate)
+                {
+                    <script>
+                        $("div#results a.ajax").click();
+                    </script>
+                }
+                <input type="hidden" name="Index" value="@Model.Index"/>
+                <input type="hidden" class="postLink ajax" name="id" href="@Url.Action("Facet", new {facetAction = FacetSearch.Models.FacetActions.Add.ToString()})" />
+                <ul>
+                @{int index = 0;}
+                @foreach (var facetItem in Model.FacetItems)
+                {
+                    <li>
+                    @facetItem.Label 
+                    @Html.HiddenFor(m=>m.FacetItems[index].Id) 
+                    @Html.HiddenFor(m => m.FacetItems[index].Label)
+
+                    <input type="hidden" name="FacetItems[@index].Mandatory" value="@facetItem.Mandatory" />
+
+                    @Html.ActionLink("x", "Facet", new { facetAction = FacetSearch.Models.FacetActions.Remove, facetItemIndex = index }, new { @class = "postLink ajax" })
+
+                   @Html.ActionLink(facetItem.Mandatory ? "Mandatory" : "Optional", "Facet", new { facetAction = FacetSearch.Models.FacetActions.ToggleMandatory, facetItemIndex = index }, new { @class = "postLink ajax" })
+                    </li>
+                    index++;
+                }
+                </ul>
+                </form>
+
