@@ -1,4 +1,4 @@
-﻿@model FacetSearch.Models.FacetSearchComposite<SearchProto.Models.Entities.Profile>
+﻿@model FacetSearch.Models.FacetSearchComposite<FacetSearch.Models.ProfileScore>
 @{
     Layout = null;
 }
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="http://960.gs/css/reset.css" />
     <link rel="stylesheet" href="http://960.gs/css/text.css" />
     <link rel="stylesheet" href="http://960.gs/css/960.css" />
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.js"></script>
     <script src="../../Content/ajaxUtils.js"></script>
@@ -42,6 +43,9 @@
     </script>
 </head>
 <body>
+    <div class="container_12">
+        <h1>@Html.ActionLink("Facet Search", "Index")</h1>
+    </div>
     <div class="container_12">
         <div class="grid_4">
             <ul>

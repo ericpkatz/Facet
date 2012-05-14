@@ -86,6 +86,7 @@
     <Compile Include="Models\Database\SchoolDAL.cs" />
     <Compile Include="Models\Database\SearchProtoDataContext.cs" />
     <Compile Include="Models\Database\SearchProtoInitializer.cs" />
+    <Compile Include="Models\ProfileScore.cs" />
     <Compile Include="Models\Service\SearchProtoService.cs" />
     <Compile Include="Models\Entities\Skill.cs" />
     <Compile Include="Models\Database\SkillDAL.cs" />

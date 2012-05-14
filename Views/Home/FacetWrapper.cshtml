@@ -3,11 +3,12 @@
 @{
     Layout = null;
 }
-
+<div  style="background-color:@Model.Color">
             <fieldset>
                 <legend>@Model.Name</legend>
                 <input type="text" class="autocomplete"  data-href="@Url.Action("Suggest", new {index = Model.Index })" data-form-filter-id="@String.Format("#form-filter-{0}", Model.Index)"/>
                 @{Html.RenderPartial("Facet");}
             </fieldset>
+</div>
             
 

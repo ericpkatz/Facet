@@ -15,6 +15,11 @@ namespace FacetSearch.Models
             set { _facets = value; }
         }
 
+        public Facet ByName(string name)
+        {
+            return Facets.Where(f => f.Name == name).SingleOrDefault();
+        }
+
         public Func<List<Facet>, List<T>> ResultFunction { get; set; }
 
         public List<T> Results

@@ -34,9 +34,21 @@ namespace FacetSearch.Models
             get { return FacetItems.Where(item => item.Mandatory).Select(item => item.Id).ToList(); }
         }
 
+        public List<int> Pluses
+        {
+            get { return FacetItems.Where(item => !item.Mandatory).Select(item => item.Id).ToList(); }
+        }
+
         public List<int> Ids
         {
             get { return FacetItems.Select(item => item.Id).ToList(); }
         }
+
+        public string Color
+        {
+            get { return this.Colors[this.Index]; }
+        }
+
+        private List<String> Colors = new List<string> { "#F2E4C4", "#F4B392", "#C4513C" };
     }
 }

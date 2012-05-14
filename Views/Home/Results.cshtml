@@ -1,16 +1,51 @@
-﻿@model FacetSearch.Models.FacetSearchComposite<SearchProto.Models.Entities.Profile>
+﻿@model FacetSearch.Models.FacetSearchComposite<FacetSearch.Models.ProfileScore>
 @{
     Layout = null;
 }
-
 @using (Html.BeginForm("Results"))
 {
-    @Html.ActionLink("Results", "Results", null, new { @class="postLink ajax"});
+    @Html.ActionLink("Results", "Results", null, new { @class = "postLink ajax" });
     <ul>
         @foreach (var result in Model.Results)
         {
             <li>
-                @result.Name
+                @result.Profile.Name (@result.Score)
+                <div class="plusses">
+                @foreach (var facet in Model.Facets)
+                {
+                    foreach (var id in facet.Pluses)
+                    {
+                        switch (facet.Name)
+                        {
+                            case "Skills":
+                                if (result.Profile.Skills.Any(sk => sk.SkillID == id))
+                                {
+                    <span class="tag" style="background-color:@facet.Color">
+                        @result.Profile.Skills.Single(sk => sk.SkillID == id).Skill.Name
+                    </span>
+                                }
+                                break;
+                            case "Schools":
+                                if (result.Profile.Schools.Any(sk => sk.SchoolID == id))
+                                {
+                    <span class="tag" style="background-color:@facet.Color">
+                        @result.Profile.Schools.Single(sk => sk.SchoolID == id).School.Name
+                    </span>
+                                }
+                                break;
+                            case "Companies":
+                                if (result.Profile.Companies.Any(sk => sk.CompanyId == id))
+                                {
+                    <span class="tag" style="background-color:@facet.Color">
+                        @result.Profile.Companies.Single(sk => sk.CompanyId == id).Company.Name
+                    </span>
+                                }
+                                break;
+                        }
+                    }
+                }
+                </div>
+                <br clear="both" />
             </li>
         }
     </ul>

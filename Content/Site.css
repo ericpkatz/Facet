@@ -73,3 +73,15 @@ textarea
 {
     display: none;
 }
+
+
+
+div.plusses span.tag
+{
+    border:solid 1px black;
+    border-radius:3px;
+    padding: 3px;
+    display:block;
+    float:left;
+    margin-right:5px;
+}

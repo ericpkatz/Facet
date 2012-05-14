@@ -23,36 +23,58 @@ namespace SearchProto.Controllers
             return View(FacetSearchComposite());
         }
 
-        private FacetSearchComposite<Profile> FacetSearchComposite()
+        private FacetSearchComposite<ProfileScore> FacetSearchComposite()
         {
             var facets = GetFacets();
             var schoolFacet = facets.Where(f => f.Name == "Schools").Single();
             var skillFacet = facets.Where(f => f.Name == "Skills").Single();
             var companyFacet = facets.Where(f => f.Name == "Companies").Single();
             var schoolIds = schoolFacet.MustHaves;
+            var optionalSchoolIds = schoolFacet.Pluses;
             var companyIds = companyFacet.MustHaves;
+            var optionalCompanyIds = companyFacet.Pluses;
             var skillIds = skillFacet.MustHaves;
-            var composite = new FacetSearchComposite<Profile>()
+            var optionalSkillIds = skillFacet.Pluses;
+            var composite = new FacetSearchComposite<ProfileScore>()
                                 {
                                     Facets = GetFacets(),
                                     ResultFunction = (f) => (from profile in svc.Profiles
-                                                                  where
-                                                                      (
-                                                                          (schoolIds.Count == 0 ||
-                                                                           !schoolIds.Except(
-                                                                               profile.Schools.Select(s => s.SchoolID)).Any())
-                                                                          &&
-                                                                          (companyIds.Count == 0 ||
-                                                                           !companyIds.Except(
-                                                                               profile.Companies.Select(s => s.CompanyId)
-                                                                                   ).Any())
-                                                                          &&
-                                                                          (skillIds.Count == 0 ||
-                                                                           !skillIds.Except(
-                                                                               profile.Skills.Select(s => s.SkillID)
-                                                                                   ).Any())
-                                                                      )
-                                                                  select profile).ToList()
+                                                             where
+                                                                 (
+                                                                     (schoolIds.Count == 0 ||
+                                                                      !schoolIds.Except(
+                                                                          profile.Schools.Select(s => s.SchoolID)).Any())
+                                                                     &&
+                                                                     (companyIds.Count == 0 ||
+                                                                      !companyIds.Except(
+                                                                          profile.Companies.Select(s => s.CompanyId)
+                                                                           ).Any())
+                                                                     &&
+                                                                     (skillIds.Count == 0 ||
+                                                                      !skillIds.Except(
+                                                                          profile.Skills.Select(s => s.SkillID)
+                                                                           ).Any())
+                                                                 )
+                                                             select new ProfileScore
+                                                                        {
+                                                                            Profile = profile,
+                                                                            Score =
+                                                                                optionalSkillIds.Count -
+                                                                                optionalSkillIds.Except(
+                                                                                    profile.Skills.Select(
+                                                                                        ps => ps.SkillID)).Count()
+                                                                                        +
+                                                                                                                                                                                                                        optionalSchoolIds.Count -
+                                                                                optionalSchoolIds.Except(
+                                                                                    profile.Schools.Select(
+                                                                                        ps => ps.SchoolID)).Count()
+                                                                                        +
+                                                                                optionalCompanyIds.Count -
+                                                                                optionalCompanyIds.Except(
+                                                                                    profile.Companies.Select(
+                                                                                        ps => ps.CompanyId)).Count()
+                                                                        }).ToList().OrderByDescending(ps => ps.Score).
+                                                                ToList()
             };
             return composite;
         }
@@ -108,7 +130,7 @@ namespace SearchProto.Controllers
         public JsonResult Suggest(string term, int index)
         {
             var facet = GetFacets()[index];
-            var resultIds = FacetSearchComposite().Results.Select(p => p.ProfileID).ToList();
+            var resultIds = FacetSearchComposite().Results.Select(p => p.Profile.ProfileID).ToList();
             return new JsonResult
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,

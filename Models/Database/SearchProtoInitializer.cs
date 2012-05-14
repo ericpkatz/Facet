@@ -103,9 +103,11 @@ namespace SearchProto.Models.Database
             user = new Profile { Name = "Mike Spinx" };
             user.Skills = new List<ProfileSkill>();
             user.Skills.Add(new ProfileSkill { Skill = boxing });
+            user.Skills.Add(new ProfileSkill { Skill = cooking });
 
             user.Schools = new List<ProfileSchool>();
             user.Schools.Add(new ProfileSchool { School = yale });
+            user.Schools.Add(new ProfileSchool { School = mit });
             context.Profiles.Add(user);
 
             user = new Profile { Name = "Butch Graves" };
